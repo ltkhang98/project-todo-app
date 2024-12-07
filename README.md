@@ -19,9 +19,6 @@ $ npm install
 ## Compile and run the project
 
 ```bash
-# install package
-$ npm install
-
 # development
 $ npm run start
 
