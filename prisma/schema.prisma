@@ -23,4 +23,23 @@ model tbl_user {
   user_birtday DateTime @db.Date
   create_date  DateTime @default(now()) @db.Date
   update_date  DateTime @updatedAt @db.Date
+
+  tbl_user_group tbl_user_group[]
+}
+
+model tbl_group {
+  groupId        Int              @id @default(autoincrement())
+  groupName      String
+  create_date    DateTime         @default(now())
+  update_date    DateTime         @updatedAt
+  tbl_user_group tbl_user_group[]
+}
+
+model tbl_user_group {
+  user    tbl_user  @relation(fields: [userId], references: [userId])
+  userId  Int
+  group   tbl_group @relation(fields: [groupId], references: [groupId])
+  groupId Int
+
+  @@id([userId, groupId])
 }
