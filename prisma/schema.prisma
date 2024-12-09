@@ -14,22 +14,24 @@ datasource db {
 }
 
 model tbl_user {
-  userId       Int      @id @default(autoincrement())
-  username     String
-  password     String
-  user_email   String
-  user_phone   Int
-  user_address String
-  user_birtday DateTime @db.Date
-  create_date  DateTime @default(now()) @db.Date
-  update_date  DateTime @updatedAt @db.Date
+  userId        Int      @id @default(autoincrement())
+  username      String
+  password      String
+  user_email    String
+  user_phone    Int
+  user_address  String
+  user_birthday DateTime @db.Date
+  create_date   DateTime @default(now()) @db.Date
+  update_date   DateTime @updatedAt @db.Date
 
   tbl_user_group tbl_user_group[]
+
+  tbl_user_todo tbl_user_todo[]
 }
 
 model tbl_group {
   groupId        Int              @id @default(autoincrement())
-  groupName      String
+  group_name     String
   create_date    DateTime         @default(now())
   update_date    DateTime         @updatedAt
   tbl_user_group tbl_user_group[]
@@ -42,4 +44,24 @@ model tbl_user_group {
   groupId Int
 
   @@id([userId, groupId])
+}
+
+model tbl_todo {
+  todoId           Int      @id @default(autoincrement())
+  todo_title       String
+  todo_description String
+  todo_status      String
+  create_date      DateTime @default(now())
+  update_date      DateTime @updatedAt
+
+  tbl_user_todo tbl_user_todo[]
+}
+
+model tbl_user_todo {
+  user   tbl_user @relation(fields: [userId], references: [userId])
+  userId Int
+  todo   tbl_todo @relation(fields: [todoId], references: [todoId])
+  todoId Int
+
+  @@id([userId, todoId])
 }
