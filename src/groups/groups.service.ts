@@ -8,7 +8,15 @@ export class GroupsService {
     constructor(private prisma: PrismaService) { }
 
     getAllGroup(): Promise<any> {
-        return this.prisma.tbl_group.findMany();
+        return this.prisma.tbl_group.findMany({
+            include: {
+                tbl_user_group: {
+                    select: {
+                        user: true
+                    }
+                }
+            }
+        });
     }
 
 

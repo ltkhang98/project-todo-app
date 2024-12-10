@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { PrismaService } from './prisma.service';
 import { GroupsModule } from './groups/groups.module';
+import { UserGroupsModule } from './user_groups/user_groups.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -21,6 +22,7 @@ import { GroupsModule } from './groups/groups.module';
   }),
     UsersModule,
     GroupsModule,
+    UserGroupsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

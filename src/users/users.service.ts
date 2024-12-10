@@ -8,7 +8,13 @@ export class UsersService {
     constructor(private prisma: PrismaService) { }
 
     getAllUser(): Promise<any> {
-        return this.prisma.tbl_user.findMany();
+        return this.prisma.tbl_user.findMany({
+            include: {
+                tbl_user_group: {
+                    select: { group: true }
+                }
+            }
+        });
     }
 
     getDetailUser(userId: number): Promise<any> {
