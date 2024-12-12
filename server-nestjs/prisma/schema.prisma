@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model tbl_user {
+  userId        Int      @id @default(autoincrement())
+  username      String
+  password      String
+  user_email    String
+  user_phone    Int
+  user_address  String
+  user_birthday DateTime @db.Date
+  create_date   DateTime @default(now()) @db.Date
+  update_date   DateTime @updatedAt @db.Date
+
+  tbl_user_group tbl_user_group[]
+
+  tbl_user_todo tbl_user_todo[]
+
+  tbl_group tbl_group[]
+}
+
+model tbl_group {
+  groupId        Int              @id @default(autoincrement())
+  group_name     String
+  create_date    DateTime         @default(now())
+  update_date    DateTime         @updatedAt
+  user           tbl_user         @relation(fields: [userId], references: [userId])
+  userId         Int
+  tbl_user_group tbl_user_group[]
+}
+
+model tbl_user_group {
+  user    tbl_user  @relation(fields: [userId], references: [userId])
+  userId  Int
+  group   tbl_group @relation(fields: [groupId], references: [groupId])
+  groupId Int
+
+  @@id([userId, groupId])
+}
+
+model tbl_todo {
+  todoId           Int      @id @default(autoincrement())
+  todo_title       String
+  todo_description String
+  todo_status      String
+  create_date      DateTime @default(now())
+  update_date      DateTime @updatedAt
+
+  tbl_user_todo tbl_user_todo[]
+}
+
+model tbl_user_todo {
+  user   tbl_user @relation(fields: [userId], references: [userId])
+  userId Int
+  todo   tbl_todo @relation(fields: [todoId], references: [todoId])
+  todoId Int
+
+  @@id([userId, todoId])
+}
