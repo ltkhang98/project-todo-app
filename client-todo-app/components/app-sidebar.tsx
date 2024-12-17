@@ -4,8 +4,13 @@ import * as React from "react";
 import {
   AudioWaveform,
   Bot,
+  Calendar,
   Command,
   GalleryVerticalEnd,
+  Home,
+  Inbox,
+  Search,
+  Settings,
   SquareTerminal,
 } from "lucide-react";
 
@@ -14,7 +19,13 @@ import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 
@@ -72,22 +83,50 @@ const data = {
       ],
     },
     {
-      title: "Groups",
+      title: "Nhóm",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Groups List",
+          title: "Danh sách nhóm",
           url: "#",
         },
         {
-          title: "My Groups",
+          title: "Nhóm của bạn",
           url: "#",
         },
       ],
     },
   ],
 };
+
+const items = [
+  {
+    title: "Dashboard",
+    url: "/",
+    icon: Home,
+  },
+  {
+    title: "Inbox",
+    url: "#",
+    icon: Inbox,
+  },
+  {
+    title: "Calendar",
+    url: "#",
+    icon: Calendar,
+  },
+  {
+    title: "Search",
+    url: "#",
+    icon: Search,
+  },
+  {
+    title: "Settings",
+    url: "#",
+    icon: Settings,
+  },
+];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -96,7 +135,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUser user={data.user} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Application</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+              <NavMain items={data.navMain} />
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

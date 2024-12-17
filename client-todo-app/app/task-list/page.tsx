@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -46,6 +47,7 @@ const tasks = [
 export default function TaskList() {
   return (
     <div>
+      <Button className="p-[20px] mb-[20px]">Thêm mới công việc</Button>
       <Card className="w-[auto]">
         <CardHeader>
           <CardTitle>Danh sách công việc</CardTitle>
