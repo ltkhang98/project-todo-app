@@ -1,4 +1,7 @@
+"use client";
 import { Button } from "@/components/ui/button";
+
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -45,9 +48,16 @@ const tasks = [
 ];
 
 export default function TaskList() {
+  const router = useRouter();
+
   return (
     <div>
-      <Button className="p-[20px] mb-[20px]">Thêm mới công việc</Button>
+      <Button
+        className="p-[20px] mb-[20px]"
+        onClick={() => router.push("/task-list/add-task")}
+      >
+        Thêm mới công việc
+      </Button>
       <Card className="w-[auto]">
         <CardHeader>
           <CardTitle>Danh sách công việc</CardTitle>
